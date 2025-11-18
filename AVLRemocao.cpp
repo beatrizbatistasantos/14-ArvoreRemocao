@@ -8,7 +8,8 @@ struct NO {
     int valor;
     NO* esq;
     NO* dir;
-    int altura;       // usado para o balanceamento
+    int altura; // usado para o balanceamento
+    NO* temp;
 };
 
 /* Raiz da árvore */
@@ -274,10 +275,16 @@ NO* removerArvore(NO* no, int valor) {
         no->dir = removerArvore(no->dir, valor);
     }
     else {
+       
         // Passo 3: Nó encontrado! Agora identifique qual caso de remoção aplicar
         
         /* ========== CASO 1: Nó sem filhos (Folha) ========== */
         // Condição: verificar se ambos os ponteiros esquerdo e direito são NULL
+        if (no->esq == NULL && no->dir == NULL)
+        {
+            no->esq = removerArvore(no->esq, valor);
+            no->dir = removerArvore(no->dir);
+        }
         // Ação: libere a memória do nó e retorne NULL para o pai
      
         
@@ -286,7 +293,7 @@ NO* removerArvore(NO* no, int valor) {
         // Condição: verificar se o ponteiro esquerdo é NULL
         // Ação: armazene o ponteiro do filho direito em uma variável temporária,
         //       libere o nó atual e retorne o ponteiro do filho direito
-        /
+        
         
         // Subcaso 2b: Apenas filho esquerdo existe (direita é NULL)
         // Condição: verificar se o ponteiro direito é NULL
